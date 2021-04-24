@@ -39,6 +39,7 @@ class GeneticAlgorithm:
         # Iniciamos el tiempo
         self.initializeEnvironmnt()
         self.checkGoal()
+        aux = 0
         while not self.solved:
             # Hacemos un bucle hasta que se encuentre la solucion del juego
             self.generationNumber += 1
@@ -48,6 +49,13 @@ class GeneticAlgorithm:
             self.updateEnvironment()
             # Actualizamod el entorno
             self.checkGoal()
+            try:
+                if not self.solved:
+                    aux += 1
+                    if aux > 20:
+                        break
+            except:
+                pass
             # Revisamos si se encontró la solución o no
         end = time()
         # Finalizamos el tiempo
@@ -120,30 +128,45 @@ class GeneticAlgorithm:
         # para seguir trabajando con esto
         print(self.minCosts, ">>", len(self.un))
 
-    def report(self):
+    def report(self, number):
         print("* * * * * * * * * * + * + * * * * * * * * * + *")
         print("Algoritmo usado: ***** GENETICA *******")
         print("Tiempo de ejecución : ", self.runningTime, "s")
         print("Numero de generaciones : ", self.generationNumber)
         print("Numero de nodos expandidos : ", self.expandedNodes)
         print("La mejor solucion>> ", self.solution)
+        print("Numero de iteraciones: ", number)
         print("Cuadro final\n")
         self.constructBoard()
-        print("* * * * * * * * * * + * + * * * * * * * * * + *")
 
     def constructBoard(self):
+        aux = 5
         # Construcion del tablero en base a la solución
-        for i in range(0, len(self.solution)):
-            temp = ['#'] * self.d
-            index = self.solution.index(i)
-            temp[index] = 'H'
-            for j in range(len(temp)):
-                if temp[j] == 'H':
-                    print(colored(temp[j], self.getColor(j, self.solution)),
-                          end=" ")
-                else:
-                    print(temp[j], end=" ")
-            print()
+        try:
+            if self.solution is not None:
+                print('SE ENCONTRÓ LA SOLUCIÓN')
+            else:
+                print("NO ENCONTRO SOLUCION......... VOLVIENDO A EJECUTAR")
+                aux += 1
+                new = GeneticAlgorithm(500, 10, 3)
+                new.start()
+                new.report(aux)
+        except:
+            pass
+        try:
+            for i in range(0, len(self.solution)):
+                temp = ['#'] * self.d
+                index = self.solution.index(i)
+                temp[index] = 'H'
+                for j in range(len(temp)):
+                    if temp[j] == 'H':
+                        print(colored(temp[j], self.getColor(j, self.solution)),
+                              end=" ")
+                    else:
+                        print(temp[j], end=" ")
+                print()
+        except:
+            pass
 
     def mutantZero(self, param):
         bound = self.d // 2

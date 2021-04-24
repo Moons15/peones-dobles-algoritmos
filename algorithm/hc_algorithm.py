@@ -98,7 +98,7 @@ class HillClimbing:
         print("La mejor solucion >> ", self.board)
         print("El cuadro final \n")
         print(self.board)
-        self.constructBoard([6, 2, 5, 3, 7, 4, 1, 0])
+        self.constructBoard(self.board)
         print("* * * * * * * * * * + * + * * * * * * * * * + *")
 
     def constructBoard(self, board):

@@ -25,7 +25,7 @@ def play_with_ga(dimension):
     ga = GeneticAlgorithm(500, dimension, 3)
     # TODO = Parametros : Tamaño , Dimension del tablero , transversal
     ga.start()
-    ga.report()
+    ga.report(0)
 
 
 def play_with_hc(initialSate, dimension):
@@ -44,7 +44,7 @@ board = r.readFile()
 initialSate = State(board)
 # TODO = Setear el tablero en arrays para ser trabajado en el algoritmo
 
-if PLAT_WITH == 'HC':
+if PLAT_WITH == 'GA':
     play_with_hc(initialSate, dimension)
 else:
     play_with_ga(dimension)
